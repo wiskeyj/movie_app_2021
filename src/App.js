@@ -1,28 +1,37 @@
 import React from 'react';
 
-function Food1(props){
-  // 전달받은 props를 props라는 인자로 받아 출력
-  return <h1>I Hate {props.fav}</h1>;
+function Food({ name, picture }){
+  return (
+    <div>
+      <h2>I Love {name}</h2>
+      <img src={picture}/>
+    </div>
+    );
 }
 
-function Food2({fav}){
-  return <h1>I Love {fav}</h1>;
-}
-
-function Sentence({fav}){
-  return <h3>sure. I Can {fav}</h3>;
-}
+const foodLike = [
+  {
+    name : 'Mint',
+    image : 'http://www.baskinrobbins.co.kr/upload/product/1530775682.png',
+  },
+  {
+    name : 'Tteokbokki',
+    image : 'https://media.istockphoto.com/photos/tteokbokki-with-eggs-in-gray-bowl-on-concrete-table-top-tteokbokki-is-picture-id1253629795?k=6&m=1253629795&s=612x612&w=0&h=gbHUJQQQa8KVRPEQi-98JvrLtx9wPF7GlkNIQD6hj9s=',
+  },
+  {
+    name : 'Americano',
+    image : 'http://image.auction.co.kr/itemimage/18/79/2f/18792f67a6.jpg',
+  },
+]; 
 
 function App() { // App 컴포넌트 정의
   return (
     <div>
-      <h1>Hello~!</h1> 
-      <Food1 fav="tomato"/>
-      <Food2 fav="tomato"/>
-      <Sentence fav="do it"/>
-      {/* props에 있는 데이터를 객체로 변환하여 Food 컴포넌트(함수)에 전달 */}
+      {foodLike.map(dish => (
+        <Food name={dish.name} picture={dish.image}/>
+      ))}
     </div>
-  );// App 컴포넌트가 html을 반환
+  ); // dish에 foodLike의 원소가 하나씩 넘어오면 그 값을 name props에 전달한다.
 }
 
 export default App;
