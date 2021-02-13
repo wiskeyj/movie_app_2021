@@ -1,54 +1,25 @@
 import React from 'react';
+import axios from 'axios';
 
 class App extends React.Component{
-    constructor(props){ 
-        // constuctor()는 render()보다 먼저 실행되지만
-        // React.Component에 포함된 함수가 아닌 자바스크립트 함수다.
-        super(props);
-        console.log('hello');
-    }
-
-    componentDidMount(){ // 컴포넌트가 처음 화면에 그려지면 실행되는 함수
-        console.log('component rendered');
-    }
-
-    componentDidUpdate(){ // 화면이 업데이트(화면이 새로 그려지면) 실행
-        console.log('I just updated');
-    }
-
-    componentWillUnmount(){ // 컴포넌트가 화면에서 떠날 때 실행
-        console.log('bye, cruel world');
-    }
-
     state = {
-        count : 0,
+        isLoading : true,
+        movies : [],
     };
 
-    add = () => {
-        this.setState(current =>({ // current에는 현재 state가 넘어온다.
-            count : current.count + 1
-        }));
-    };
-
-    minus = () => {
-        this.setState(current =>({
-            count : current.count - 1
-        }));
-    };
-
-    render() {
-        console.log('rendering');
-        return (
-            <div>
-                <h1>The number is {this.state.count}</h1>
-                    <button onClick={this.add}>Add</button>
-                    &nbsp;
-                    <button onClick={this.minus}>Minus</button>
-            </div>
-        );
-        
+    getMovies = async () =>{ // async : getMovies()가 비동기 함수 - 시간이 필요함을 javascript에 알림
+        const movies = await axios.get('https://yts-proxy.now.sh/list_movies.json');
+        //await : axios.get()의 실행을 기다리라 지시
     }
-  
+
+    componentDidMount(){
+        this.getMovies();
+    }
+
+    render(){
+        const {isLoading} = this.state;
+        return <div>{isLoading ? 'Loading. . . ' : 'we are ready' }</div>;
+    }
 }
 
 export default App;
